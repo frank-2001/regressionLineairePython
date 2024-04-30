@@ -1,0 +1,58 @@
+
+
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+  <script src="{{ url_for('static', filename='3.4.3.js') }}"></script>
+
+  <!-- <link rel="stylesheet" href="src/style.css"> -->
+</head>
+<body class="grid bg-blue-100 color-black">
+ <header class="flex center bg-green-500 justify-center text-white px-10 py-5">
+    <span class="font-bold text-5xl text-uppercase">
+      Salary Prediction
+    </span>
+ </header>
+ <section class="grid p-10 h-screen">
+  
+  <div class="h-full grid content-start mt-16">
+    <!-- <h2 class="text-center pb-8 font-bold text-lg" id="title">ENCRYPT</h2> -->
+    <div class="grid gap-4 justify-evenly items-start">
+
+      <form id="encrypt" class=" w-96 gap-4 grid" enctype="multipart/form-data">
+        <input type="hidden" id="action" name="action">
+        <fieldset class="grid text-center gap-4">
+          <span>Nombre d'annee d'experience</span>
+          <input type="number" class="p-5 rounded" step="0.1" required name="years">  
+        </fieldset>
+        <button class="bg-green-500 text-white p-2 rounded">Valider</button>
+      </form>
+
+      <div class="bg-black w-96 rounded text-white p-8" >
+        Resultat :
+        <span id="result"></span>
+      </div>
+    </div>
+  </div>
+ </section>
+</body>
+</html>
+<script src="{{ url_for('static', filename='jquery-3.7.1.min.js') }}"></script>
+<script>
+
+  $("form").submit(function (e) { 
+    e.preventDefault();
+    let form = new FormData(this)
+    $("#result").html("Loading....");
+    $.get("/predict/"+form.get("years"),
+      function (data, textStatus, jqXHR) {
+        $("#result").text(data);
+      },
+      ""
+    );
+  });
+
+</script>
